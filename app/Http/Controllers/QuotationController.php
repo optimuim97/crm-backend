@@ -15,7 +15,7 @@ class QuotationController extends Controller
         try {
 
             $validatedData = customValidation($request->all(), Quotation::$rules);
-            $quotation = Quotation::create();
+            $quotation = Quotation::create($validatedData);
 
             foreach ($validatedData['products'] as $productData) {
                 $product = Product::find($productData['id']);
@@ -26,7 +26,7 @@ class QuotationController extends Controller
         } catch (ValidationException $e) {
 
             $errors = $e->validator->errors()->all();
-            return response()->json($errors);
+            return response()->json($errors, 422);
         }
     }
     public function confirme($quotationId)
@@ -34,10 +34,11 @@ class QuotationController extends Controller
         $quotation = Quotation::findOrFail($quotationId);
 
         foreach ($quotation->products as $product) {
-            $product->quantite_stock -= $product->pivot->quantity;
+            // $product->quantite_stock -= $product->pivot->quantity;
+            $product->quantity -= $product->pivot->quantity;
             $product->save();
         }
 
-        return response()->json(['message' => 'Quotation confirmée et stock mis à jour']);
+        return response()->json(['message' => 'Devis confirmée et stock mis à jour']);
     }
 }

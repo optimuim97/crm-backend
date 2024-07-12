@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('quote_number')->unique();
             $table->unsignedBigInteger('customer_id');
-            $table->decimal('total_amount', 10, 2);
+            $table->decimal('total_amount', 10, 2)->nullable();
             $table->boolean('confirmed')->default(false);
             $table->timestamps();
 
