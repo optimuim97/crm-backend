@@ -33,7 +33,7 @@ class Product extends Model
         "provider_reference" => "nullable",
         "barcode" => "required",
         "designation" => "required",
-        "price" => "required"
+        "price" => "nullable"
     ];
 
     public function quotations()
