@@ -23,13 +23,21 @@ class Product extends Model
         "internal_reference",
         "provider_reference",
         "barcode",
-        "designation"
+        "designation",
+        "price",
+        "quantity"
     ];
 
     public static $rules = [
         "internal_reference" => "nullable",
         "provider_reference" => "nullable",
         "barcode" => "required",
-        "designation" => "required"
+        "designation" => "required",
+        "price" => "required"
     ];
+
+    public function quotations()
+    {
+        return $this->belongsToMany(Quotation::class, 'quotation_product')->withPivot('quantity');
+    }
 }

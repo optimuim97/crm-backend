@@ -2,83 +2,85 @@
 
 namespace App\Services;
 
-use App\Models\Provider;
+use App\Models\Customer;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProviderService
+class CustomerService
 {
+
     public function add($input)
     {
         try {
 
-            $data = customValidation($input, Provider::$rules);
-            $Provider = Provider::create($data);
+            $data = customValidation($input, Customer::$rules);
+            $product = Customer::create($data);
         } catch (ValidationException $e) {
+
             $errors = $e->validator->errors()->all();
             return response()->json($errors);
         }
 
-        return respJson(Response::HTTP_CREATED, "Created", $Provider);
+        return respJson(Response::HTTP_CREATED, "Created", $product);
     }
 
     public function show($ref)
     {
-        $Provider = Provider::where('internal_reference', $ref)->first();
+        $product = Customer::where('internal_reference', $ref)->first();
 
-        if (empty($Provider)) {
+        if (empty($product)) {
             return notFound();
         }
 
         return respJson(
             Response::HTTP_OK,
             "Details",
-            $Provider
+            $product
         );
     }
 
     public function update($ref, $input)
     {
-        $Provider = Provider::where('internal_reference', $ref)->first();
+        $product = Customer::where('internal_reference', $ref)->first();
 
-        if (empty($Provider)) {
+        if (empty($product)) {
             return notFound();
         }
 
-        $Provider->update($input);
+        $product->update($input);
 
         return respJson(
             Response::HTTP_OK,
             "Update",
-            $Provider
+            $product
         );
     }
 
-    public function delete($id)
+    public function delete($ref)
     {
-        $Provider = Provider::where(['internal_reference' => $id])->first();
+        $product = Customer::where(['internal_reference' => $ref])->first();
 
-        if (empty($Provider)) {
+        if (empty($product)) {
             return notFound();
         }
 
-        $Provider->delete();
+        $product->delete();
 
         return respJson(
             Response::HTTP_NO_CONTENT,
             "Deleted",
-            $Provider
+            $product
         );
     }
 
     public function all()
     {
-        $Providers = Provider::all();
+        $products = Customer::all();
 
         return respJson(
             Response::HTTP_OK,
             "All",
-            $Providers
+            $products
         );
     }
 }

@@ -14,12 +14,10 @@ class ProductService
 
             $data = customValidation($input, Product::$rules);
             $product = Product::create($data);
-
         } catch (ValidationException $e) {
 
             $errors = $e->validator->errors()->all();
             return response()->json($errors);
-
         }
 
         return respJson(Response::HTTP_CREATED, "Created", $product);
@@ -57,9 +55,9 @@ class ProductService
         );
     }
 
-    public function delete($id)
+    public function delete($ref)
     {
-        $product = Product::where(['internal_reference' => $id])->first();
+        $product = Product::where(['internal_reference' => $ref])->first();
 
         if (empty($product)) {
             return notFound();
@@ -73,10 +71,9 @@ class ProductService
             $product
         );
     }
-
     public function all()
     {
-        $products = Product::latest();
+        $products = Product::all();
 
         return respJson(
             Response::HTTP_OK,

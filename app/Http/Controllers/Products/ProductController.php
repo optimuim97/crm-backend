@@ -24,15 +24,15 @@ class ProductController extends Controller
         return $this->productService->all();
     }
 
-    public function show(Product $product)
+    public function show($ref)
     {
-        return $this->productService->show($product->internal_reference);
+        return $this->productService->show($ref);
     }
 
-    public function update(Product $product, Request $request)
+    public function update($ref, Request $request)
     {
         $input = $request->all();
-        return $this->productService->update($product->internal_reference, $input);
+        return $this->productService->update($ref, $input);
     }
 
     public function delete(Product $product)

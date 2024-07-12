@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
-            $table->string('internal_reference');
-            $table->string('provider_reference')->nullable();
-            $table->string('barcode')->nullable();
-            $table->string('designation');
+            $table->string('order_number');
+            $table->double('total_amount')->nullable();
+            $table->boolean('is_valided')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('article');
+        Schema::dropIfExists('purchase_orders');
     }
 };

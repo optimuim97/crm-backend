@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Providerss;
+namespace App\Http\Controllers\Providers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Provider;
-use App\Models\Providers;
 use App\Services\ProviderService;
 use Illuminate\Http\Request;
 
 class ProviderController extends Controller
 {
-    public $providerService;
 
     public function __construct(private ProviderService $providersService)
     {
@@ -18,27 +16,27 @@ class ProviderController extends Controller
 
     public function add(Request $request)
     {
-        return $this->providerService->add($request->all());
+        return $this->providersService->add($request->all());
     }
 
     public function all()
     {
-        return $this->providerService->all();
+        return $this->providersService->all();
     }
 
-    public function show(Provider $Providers)
+    public function show($ref)
     {
-        return $this->providerService->show($Providers->internal_reference);
+        return $this->providersService->show($ref);
     }
 
-    public function update(Provider $Providers, Request $request)
+    public function update($ref, Request $request)
     {
         $input = $request->all();
-        return $this->providerService->update($Providers->internal_reference, $input);
+        return $this->providersService->update($ref, $input);
     }
 
-    public function delete(Provider $Providers)
+    public function delete($ref)
     {
-        return $this->providerService->delete($Providers->internal_reference);
+        return $this->providersService->delete($ref);
     }
 }

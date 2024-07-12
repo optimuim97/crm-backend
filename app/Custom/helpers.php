@@ -37,4 +37,5 @@ function customValidation(array $data, array $rules)
     $validator->validate();
     // Return Validate Data
     return $validator->validated();
+
 }
