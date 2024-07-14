@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\PurchaseOrders;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Provider;
 use App\Models\PurchaseOrder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -12,16 +14,20 @@ class CreatePurchaseController extends Controller
 {
     public function __invoke(Request $request)
     {
-
         try {
 
             $data = $request->all();
             // First validate the form data
             $validatedData = customValidation($data, PurchaseOrder::$rules);
+            $provider = Provider::where(['reference' => $validatedData['provider_reference']])->first();
+
+            if (empty($provider)) {
+                return notFound("Fournisseur Introuvable");
+            }
 
             $purchaseOrder = PurchaseOrder::create([
-                // 'order_number' => $validatedData['order_number'],
                 'provider_reference' => $validatedData['provider_reference'],
+                'provider_id' => $provider->id,
                 'total_amount' => $validatedData['total_amount'],
             ]);
 

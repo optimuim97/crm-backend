@@ -21,6 +21,7 @@ class PurchaseOrder extends Model
 
     protected $fillable = [
         "order_number",
+        "provider_id",
         "total_amount",
         "is_valided"
     ];
@@ -32,7 +33,7 @@ class PurchaseOrder extends Model
         'products.*.id' => 'required|exists:products,id',
         'products.*.quantity' => 'required|integer|min:1',
         "is_valided" => "nullable",
-        'total_amount' => 'required|numeric'
+        'total_amount' => 'nullable|numeric'
     ];
 
     public function products()

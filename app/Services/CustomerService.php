@@ -75,7 +75,7 @@ class CustomerService
 
     public function all()
     {
-        $products = Customer::all();
+        $products = Customer::orderBy('created_at', 'DESC')->get();
 
         return respJson(
             Response::HTTP_OK,

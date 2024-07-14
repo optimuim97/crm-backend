@@ -10,22 +10,22 @@ function respJson($status, $message, $data)
         "status" => $status,
         "message" => $message,
         "data" => $data
-    ]);
+    ], $status);
 }
 
-function badReq()
+function badReq($message = "Bad Resquest")
 {
     return response()->json([
         "status" => Response::HTTP_BAD_REQUEST,
-        "message" => "Bad Resquest"
+        "message" => $message
     ]);
 }
 
-function notFound()
+function notFound($message = "Not Found")
 {
     return response()->json([
         "status" => Response::HTTP_NOT_FOUND,
-        "message" => "Not Found"
+        "message" => $message
     ]);
 }
 
@@ -37,5 +37,4 @@ function customValidation(array $data, array $rules)
     $validator->validate();
     // Return Validate Data
     return $validator->validated();
-
 }

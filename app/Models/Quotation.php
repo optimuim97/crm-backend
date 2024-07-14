@@ -13,7 +13,6 @@ class Quotation extends Model
     public static function boot()
     {
         parent::boot();
-
         static::creating(function ($quote) {
             $quote->quote_number = Str::ulid();
         });
@@ -26,7 +25,7 @@ class Quotation extends Model
         "confirmed"
     ];
 
-    protected $rules = [
+    public static $rules = [
         "quote_number" => "nullable",
         "customer_id" => "nullable",
         "total_amount" => "nullable",
@@ -36,7 +35,7 @@ class Quotation extends Model
         'products.*.quantity' => 'required|integer|min:1',
     ];
 
-    public function produits()
+    public function products()
     {
         return $this->belongsToMany(Product::class, 'quotation_product')->withPivot('quantity');
     }

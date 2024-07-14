@@ -73,7 +73,7 @@ class ProviderService
 
     public function all()
     {
-        $Providers = Provider::all();
+        $Providers = Provider::orderBy('created_at','DESC')->get();
 
         return respJson(
             Response::HTTP_OK,

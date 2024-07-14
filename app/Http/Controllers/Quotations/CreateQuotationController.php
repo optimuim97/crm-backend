@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Quotations;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Quotation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
-class QuotationController extends Controller
+class CreateQuotationController extends Controller
 {
-    public function add(Request $request)
+    public function __invoke(Request $request)
     {
         try {
 
@@ -19,7 +20,12 @@ class QuotationController extends Controller
 
             foreach ($validatedData['products'] as $productData) {
                 $product = Product::find($productData['id']);
-                $quotation->products()->attach($product, ['quantity' => $productData['quantity']]);
+
+                if ($product->quantity > 0) {
+                    $quotation->products()->attach($product, ['quantity' => $productData['quantity']]);
+                } else {
+                    return respJson(Response::HTTP_FORBIDDEN, "Le produit, n'est plus disponible en stock", $product);
+                }
             }
 
             return respJson(Response::HTTP_CREATED, "Created", $quotation);
@@ -28,17 +34,5 @@ class QuotationController extends Controller
             $errors = $e->validator->errors()->all();
             return response()->json($errors, 422);
         }
-    }
-    public function confirme($quotationId)
-    {
-        $quotation = Quotation::findOrFail($quotationId);
-
-        foreach ($quotation->products as $product) {
-            // $product->quantite_stock -= $product->pivot->quantity;
-            $product->quantity -= $product->pivot->quantity;
-            $product->save();
-        }
-
-        return response()->json(['message' => 'Devis confirmée et stock mis à jour']);
     }
 }

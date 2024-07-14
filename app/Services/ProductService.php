@@ -73,7 +73,7 @@ class ProductService
     }
     public function all()
     {
-        $products = Product::all();
+        $products = Product::orderBy('created_at', 'desc')->get();
 
         return respJson(
             Response::HTTP_OK,
