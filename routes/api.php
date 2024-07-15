@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\CreateTransactionController;
 use App\Http\Controllers\Customers\CustomerController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\PaymentsMethodsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Products\ProductController;
 use App\Http\Controllers\Providers\ProviderController;
 use App\Http\Controllers\PurchaseOrders\CreatePurchaseController;
 use App\Http\Controllers\PurchaseOrders\PurchaseOrderController;
+use App\Http\Controllers\PurchaseOrders\UpdatePurchaseOrderController;
 use App\Http\Controllers\Quotations\CreateQuotationController;
 use App\Http\Controllers\Quotations\QuotationController;
 use App\Http\Controllers\UpdateProductController;
@@ -35,7 +39,11 @@ Route::get('show-product/{ref}', [ProductController::class, 'show']);
 Route::patch('update-product/{ref}', [ProductController::class, 'update']);
 Route::delete('delete-product', [ProductController::class, 'delete']);
 
-Route::get('update-stock/{orderNumber}', UpdateProductController::class);
+// PurchaseOrder
+Route::get('purchase-orders', [PurchaseOrderController::class, 'all']);
+Route::get('show-purchase-orders/{ref}', [PurchaseOrderController::class, 'show']);
+Route::patch('update-purchase-orders/{ref}', [PurchaseOrderController::class, 'update']);
+Route::delete('delete-purchase-orders', [PurchaseOrderController::class, 'delete']);
 
 //Providers
 Route::post('add-provider', [ProviderController::class, 'add']);
@@ -53,8 +61,15 @@ Route::delete('delete-customer', [CustomerController::class, 'delete']);
 
 // PurchaseOrder
 Route::post('create-purchase-order', CreatePurchaseController::class);
-Route::patch('update-purchase-order/{order_number}', PurchaseOrderController::class);
+Route::patch('update-purchase-order/{orderNumber}', UpdatePurchaseOrderController::class);
+Route::get('update-stock/{orderNumber}', UpdateProductController::class);
 
 // Quotation
 Route::post('create-quotation', CreateQuotationController::class);
 Route::post('confirm-quotation', [QuotationController::class, 'confirme']);
+
+//Payments
+Route::post('create-transaction', CreateTransactionController::class);
+Route::get('get-payments-methods', [PaymentsMethodsController::class, 'getAll']);
+
+Route::get('get-invoice/{invoiceNumber}', [InvoiceController::class, 'show']);

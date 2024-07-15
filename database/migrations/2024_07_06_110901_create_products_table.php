@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('c', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('internal_reference');
             $table->string('provider_reference')->nullable();
             $table->string('barcode')->nullable();
             $table->string('designation');
             $table->string('quantity')->nullable();
+            $table->string('quantity_stock')->nullable();
             $table->decimal('price')->nullable();
+            $table->decimal('sales_price')->nullable();
             $table->timestamps();
         });
     }

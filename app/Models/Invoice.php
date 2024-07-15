@@ -23,13 +23,16 @@ class Invoice extends Model
         "invoice_number",
         "provider_id",
         "purchase_order_id",
-        "total_amount"
+        "fee",
+        "amount",
+        "total_amount",
     ];
 
     public static $rules = [
-        "invoice_number" => 'required',
+        "fee" => 'nullable',
         "purchase_order_id" => 'required',
         "provider_id" => 'required',
+        "amount" => 'required',
         "total_amount" => 'required',
     ];
 }

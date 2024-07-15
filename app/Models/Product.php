@@ -25,7 +25,8 @@ class Product extends Model
         "barcode",
         "designation",
         "price",
-        "quantity"
+        "quantity",
+        "quantity_stock"
     ];
 
     public static $rules = [
@@ -33,7 +34,7 @@ class Product extends Model
         "provider_reference" => "nullable",
         "barcode" => "required",
         "designation" => "required",
-        "price" => "nullable"
+        "price" => "required"
     ];
 
     public function quotations()

@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchase_orders', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('provider_id')->constrained();
-            $table->string('order_number');
-            $table->double('total_amount')->nullable();
-            $table->boolean('is_valided')->default(0);
-            $table->timestamp('valided_at')->nullable();
+            $table->string('designation');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchase_orders');
+        Schema::dropIfExists('payment_methods');
     }
 };

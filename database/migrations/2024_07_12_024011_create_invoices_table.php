@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->string('invoice_number')->unique();
-            $table->unsignedBigInteger('provider_id');
+            $table->string('fee')->default(0);
+            $table->foreignId('provider_id')->constrained();
+            $table->foreignId('purchase_order_id')->constrained();
+            $table->decimal('amount', 10, 2);
             $table->decimal('total_amount', 10, 2);
-            $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("invoice_id");
+            $table->foreignId("invoice_id")->constrained();
+            $table->foreignId("payment_method_id")->constrained();
             $table->double("amount");
             $table->string("fee")->nullable();
             $table->string("total_amount");
@@ -22,7 +23,6 @@ return new class extends Migration
             $table->string("reference_operateur")->nullable();
             $table->string("memo")->nullable();
             $table->string("reference_transaction")->nullable();
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();
         });
     }

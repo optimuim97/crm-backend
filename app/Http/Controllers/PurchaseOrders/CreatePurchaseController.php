@@ -25,10 +25,11 @@ class CreatePurchaseController extends Controller
                 return notFound("Fournisseur Introuvable");
             }
 
+
             $purchaseOrder = PurchaseOrder::create([
-                'provider_reference' => $validatedData['provider_reference'],
+                'provider_reference' => $provider->reference,
                 'provider_id' => $provider->id,
-                'total_amount' => $validatedData['total_amount'],
+                'total_amount' => $validatedData['total_amount'] //TODO must verify totalAmount
             ]);
 
             foreach ($validatedData['products'] as $productData) {

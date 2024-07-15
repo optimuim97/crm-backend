@@ -14,12 +14,17 @@ class UpdateProductController extends Controller
         $purchase = PurchaseOrder::where(["order_number" => $orderNumber])->first();
         $products = [];
 
-        foreach ($purchase->products as $key => $value) {
-            $product = Product::find($value->pivot->product_id);
-            $product->quantity = $value->pivot->quantity;
-            $product->save();
+        if ($purchase->is_valided == true) {
 
-            array_push($products, $product);
+            foreach ($purchase->products as $key => $value) {
+
+                $product = Product::find($value->pivot->product_id);
+                $product->quantity_stock = $value->pivot->quantity;
+                $product->save();
+
+                array_push($products, $product);
+            }
+
         }
 
         return respJson(Response::HTTP_OK, "Updated", $products);
