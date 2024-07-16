@@ -12,10 +12,12 @@ class UpdateProductController extends Controller
     public function __invoke($orderNumber)
     {
         $purchase = PurchaseOrder::where(["order_number" => $orderNumber])->first();
+        if (empty($purchase)) {
+            return notFound();
+        }
+
         $products = [];
-
         if ($purchase->is_valided == true) {
-
             foreach ($purchase->products as $key => $value) {
 
                 $product = Product::find($value->pivot->product_id);
@@ -24,7 +26,6 @@ class UpdateProductController extends Controller
 
                 array_push($products, $product);
             }
-
         }
 
         return respJson(Response::HTTP_OK, "Updated", $products);

@@ -41,7 +41,7 @@ class CreatePurchaseController extends Controller
         } catch (ValidationException $e) {
 
             $errors = $e->validator->errors()->all();
-            return response()->json($errors);
+            return badData(errors:$errors);;
         }
     }
 }

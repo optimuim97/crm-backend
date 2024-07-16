@@ -21,7 +21,7 @@ class CreateQuotationController extends Controller
             foreach ($validatedData['products'] as $productData) {
                 $product = Product::find($productData['id']);
 
-                if ($product->quantity > 0) {
+                if ($product->quantity_stock > 0) {
                     $quotation->products()->attach($product, ['quantity' => $productData['quantity']]);
                 } else {
                     return respJson(Response::HTTP_FORBIDDEN, "Le produit, n'est plus disponible en stock", $product);

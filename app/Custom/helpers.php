@@ -18,7 +18,14 @@ function badReq($message = "Bad Resquest")
     return response()->json([
         "status" => Response::HTTP_BAD_REQUEST,
         "message" => $message
-    ]);
+    ], 400);
+}
+function badData($status = Response::HTTP_UNPROCESSABLE_ENTITY, $errors = "Vérifier les champ à renseigner")
+{
+    return response()->json([
+        "status" => Response::HTTP_UNPROCESSABLE_ENTITY,
+        "message" => $errors,
+    ], $status);
 }
 
 function notFound($message = "Not Found")

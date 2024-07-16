@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-
-class Transaction extends Model
+class TransactionCustomer extends Model
 {
     use HasFactory;
+
 
     public static function boot()
     {
@@ -20,7 +20,7 @@ class Transaction extends Model
     }
 
     protected $fillable = [
-        "invoice_id",
+        "invoice_customer_id",
         "payment_method_id",
         "amount",
         "fee",
@@ -30,9 +30,8 @@ class Transaction extends Model
         "memo",
         "reference_transaction"
     ];
-
     public static $rules = [
-        "invoice_id" => "required",
+        "invoice_customer_id" => "required",
         "payment_method_id" => "required",
         "amount" => "required|nullable",
         "fee" => "nullable",

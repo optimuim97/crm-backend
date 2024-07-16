@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\PurchaseOrderResource;
 use App\Models\PurchaseOrder;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ class PurchaseOrderService
         } catch (ValidationException $e) {
 
             $errors = $e->validator->errors()->all();
-            return response()->json($errors);
+            return badData(errors:$errors);;
         }
 
         return respJson(Response::HTTP_CREATED, "Created", $product);
@@ -75,12 +76,13 @@ class PurchaseOrderService
 
     public function all()
     {
-        $products = PurchaseOrder::orderBy('created_at', 'DESC')->get();
+        $purchaseOrder = PurchaseOrder::orderBy('created_at', 'DESC')->get();
 
         return respJson(
             Response::HTTP_OK,
             "All",
-            $products
+            // $purchaseOrder
+            PurchaseOrderResource::collection($purchaseOrder)
         );
     }
 }

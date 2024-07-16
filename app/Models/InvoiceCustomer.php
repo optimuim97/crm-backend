@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
-class Invoice extends Model
+class InvoiceCustomer extends Model
 {
     use HasFactory;
 
@@ -20,9 +20,9 @@ class Invoice extends Model
 
     protected $fillable = [
         "invoice_number",
-        "provider_id",
+        "customer_id",
         "is_paid",
-        "purchase_order_id",
+        "quotation_id",
         "fee",
         "amount",
         "total_amount",
@@ -30,19 +30,19 @@ class Invoice extends Model
 
     public static $rules = [
         "fee" => 'nullable',
-        "purchase_order_id" => 'required',
-        "provider_id" => 'required',
+        "quotation_id" => 'required',
+        "customer_id" => 'required',
         "amount" => 'required',
         "total_amount" => 'required',
     ];
 
-    public function purchaseOrder()
+    /**
+     * Get the quotation that owns the InvoiceCustomer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function quotation()
     {
-        return $this->belongsTo(PurchaseOrder::class);
-    }
-
-    public function transaction()
-    {
-        return $this->hasMany(Transaction::class);
+        return $this->belongsTo(Quotation::class, 'quotation_id');
     }
 }

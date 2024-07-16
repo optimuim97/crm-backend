@@ -40,4 +40,9 @@ class PurchaseOrder extends Model
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity');
     }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

@@ -39,4 +39,9 @@ class Quotation extends Model
     {
         return $this->belongsToMany(Product::class, 'quotation_product')->withPivot('quantity');
     }
+
+    public function invoice()
+    {
+        return $this->hasOne(InvoiceCustomer::class);
+    }
 }

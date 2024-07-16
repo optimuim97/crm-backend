@@ -16,7 +16,7 @@ class ProviderService
             $Provider = Provider::create($data);
         } catch (ValidationException $e) {
             $errors = $e->validator->errors()->all();
-            return response()->json($errors);
+            return badData(errors:$errors);;
         }
 
         return respJson(Response::HTTP_CREATED, "Created", $Provider);
