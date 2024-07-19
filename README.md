@@ -24,13 +24,12 @@ DB_PASSWORD=votre_mot_de_passe
 ### Lancer les migrations et les seeders
 ```php artisan migrate --seed```
 
-
 ### Installer Laravel Passport
  ```php artisan passport:install```
 
-###Installer Laravel Passport
+### lancer le serveur
  ``` php artisan serve ```
-
+### Le nom d'utilisateur et le mot de passe sont dans les seeders et le port pour faire fonctionner le front est le port ```8000```
 
 
 #crm-backend
